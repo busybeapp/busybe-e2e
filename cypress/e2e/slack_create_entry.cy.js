@@ -3,8 +3,13 @@ import { addSlackEntry } from "../support/slack.driver.js";
 describe('Add slack entry and verify on BusyBe website', () => {
   it('should add entry via slack and verify on BusyBe website', () => {
     const slackApiUrl = "https://clear-slate-8b4de92f5776.herokuapp.com/api/slack/message-shortcut/"
-    const slackToken = "KOu9p6TVAqvdNHIiDwv5cmDi"
+    const slackToken = Cypress.env('SLACK_TOKEN');
     const testMessage = "E2E Rocks!"
+
+    if (!slackToken) {
+      throw new Error("SLACK_TOKEN is not defined. Please set it before running the test.");
+    }
+
 
     addSlackEntry(slackApiUrl, slackToken, testMessage).then((response) => {
       expect(response.status).to.eq(200);

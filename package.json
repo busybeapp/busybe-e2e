@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx cypress run",
+    "test": "SLACK_TOKEN=$SLACK_TOKEN npx cypress run",
     "cy:open": "cypress open"
   },
   "repository": {
