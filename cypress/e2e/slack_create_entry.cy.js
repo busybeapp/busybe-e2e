@@ -2,7 +2,6 @@ import { addSlackEntry } from "../support/slack.driver.js";
 
 describe('Add slack entry and verify on BusyBe website', () => {
   it('should add entry via slack and verify on BusyBe website', () => {
-    const slackApiUrl = "https://clear-slate-8b4de92f5776.herokuapp.com/api/slack/message-shortcut/"
     const slackToken = Cypress.env('SLACK_TOKEN');
     const testMessage = `E2E Rocks! ${new Date().toISOString()}`
 
@@ -11,7 +10,7 @@ describe('Add slack entry and verify on BusyBe website', () => {
     }
 
 
-    addSlackEntry(slackApiUrl, slackToken, testMessage).then((response) => {
+    addSlackEntry(slackToken, testMessage).then((response) => {
       expect(response.status).to.eq(200);
       cy.log("Entry successfully added via Slack API");
     });

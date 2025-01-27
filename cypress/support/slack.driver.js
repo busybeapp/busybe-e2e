@@ -1,7 +1,10 @@
-export const addSlackEntry = (slackUrl, slackToken, message) => {
+
+const slackApiUrl = "https://clear-slate-8b4de92f5776.herokuapp.com/api/slack/message-shortcut/"
+
+export const addSlackEntry = (slackToken, message) => {
   return cy.request({
     method: "POST",
-    url: slackUrl,
+    url: slackApiUrl,
     form: true,
     body: {
       payload: JSON.stringify({
