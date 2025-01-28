@@ -24,9 +24,9 @@ jobs:
     - name: Run E2E Tests
       id: e2e-tests
       env:
-        SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        SLACK_TOKEN: ${{ secrets.SLACK_VERIFICATION_TOKEN }}
       run: |
-        npm test || echo "Tests failed"
+        SLACK_TOKEN=${{ secrets.SLACK_VERIFICATION_TOKEN }} make test || echo "Tests failed"
 
     - name: Send Slack Notification on Failure
       if: failure()
