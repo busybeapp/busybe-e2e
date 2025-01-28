@@ -1,0 +1,23 @@
+{
+  "name": "busybe-e2e",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "SLACK_TOKEN=$SLACK_TOKEN npx cypress run",
+    "cy:open": "cypress open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/busybeapp/busybe-e2e.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/busybeapp/busybe-e2e/issues"
+  },
+  "homepage": "https://github.com/busybeapp/busybe-e2e#readme",
+  "devDependencies": {
+    "cypress": "^13.17.0"
+  }
+}
