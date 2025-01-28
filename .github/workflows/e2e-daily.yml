@@ -35,4 +35,4 @@ jobs:
       run: |
         curl -X POST -H 'Content-type: application/json' \
         --data '{"text":"🚨 BusyBe E2E Tests failed! Check the logs for more details: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/${{ github.run_id }}"}' \
-        $SLACK_WEBHOOK_URL
+        "$SLACK_WEBHOOK_URL"
