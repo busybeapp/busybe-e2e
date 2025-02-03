@@ -6,9 +6,10 @@ export class AppDriver {
     }
   
     static verifyEntryDisplayed(testMessage) {
-      cy.contains(testMessage, { timeout: 10000 })
-        .should("be.visible")
-        .log("Entry is displayed on the BusyBe website");
-    }
+        cy.get(`flt-semantics[aria-label="${testMessage}"]`, { timeout: 10000 })
+        .should('exist')
+        .and('be.visible')
+        .log(`Entry "${testMessage}" is displayed on the BusyBe website`);
+    }    
   }
   
