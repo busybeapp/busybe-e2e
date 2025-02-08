@@ -39,6 +39,9 @@ jobs:
         name: E2E-Test-Report
         path: docs
         retention-days: 7 # Keep report for 7 days
+    
+    - name: Disable Jekyll processing
+      run: touch docs/.nojekyll
 
     - name: Deploy Report to GitHub Pages
       if: always()
