@@ -21,13 +21,35 @@ jobs:
     - name: Install Dependencies
       run: npm install
 
-    - name: Run E2E Tests
+    - name: Run E2E Tests with Mochawesome
       id: e2e-tests
       env:
         SLACK_TOKEN: ${{ secrets.SLACK_VERIFICATION_TOKEN }}
       run: |
-        SLACK_TOKEN=${{ secrets.SLACK_VERIFICATION_TOKEN }} make test
-      
+        SLACK_TOKEN=${{ secrets.SLACK_VERIFICATION_TOKEN }} npx cypress run --reporter mochawesome --reporter-options reportDir=reports,overwrite=false,html=false,json=true
+        npx mochawesome-merge reports/*.json > merged-report.json
+        npx marge merged-report.json -o reports/html
+
+    - name: Upload Test Report as Artifact
+      if: always() # Upload even if tests pass
+      uses: actions/upload-artifact@v3
+      with:
+        name: E2E-Test-Report
+        path: reports/html
+        retention-days: 7 # Keep report for 7 days
+
+    - name: Deploy Report to GitHub Pages
+      if: always()
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+        git checkout --orphan gh-pages
+        git rm -rf .
+        mv reports/html/* .
+        git add .
+        git commit -m "Update E2E Test Report"
+        git push -f origin gh-pages
+
     - name: Notify Slack on deployment failure
       if: failure()
       uses: rtCamp/action-slack-notify@v2
