@@ -28,10 +28,9 @@ jobs:
       run: |
         SLACK_TOKEN=${{ secrets.SLACK_VERIFICATION_TOKEN }} npx cypress run --reporter mochawesome --reporter-options reportDir=reports,overwrite=false,html=false,json=true
         npx mochawesome-merge reports/*.json > merged-report.json
-        npx marge merged-report.json -o reports/html
+        npx marge merged-report.json -o reports/html --reportFilename index
         mkdir -p docs
         mv reports/html/* docs/
-        mv docs/merged-report.html docs/index.html
 
     - name: Push Web App
       run: |
