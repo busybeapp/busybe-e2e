@@ -29,26 +29,23 @@ jobs:
         SLACK_TOKEN=${{ secrets.SLACK_VERIFICATION_TOKEN }} npx cypress run --reporter mochawesome --reporter-options reportDir=reports,overwrite=false,html=false,json=true
         npx mochawesome-merge reports/*.json > merged-report.json
         npx marge merged-report.json -o reports/html
+        mkdir -p docs
+        mv reports/html/* docs/
 
     - name: Upload Test Report as Artifact
       if: always() # Upload even if tests pass
       uses: actions/upload-artifact@v4
       with:
         name: E2E-Test-Report
-        path: reports/html
+        path: docs
         retention-days: 7 # Keep report for 7 days
 
     - name: Deploy Report to GitHub Pages
       if: always()
-      run: |
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@github.com"
-        git checkout --orphan gh-pages
-        git rm -rf .
-        mv reports/html/* .
-        git add .
-        git commit -m "Update E2E Test Report"
-        git push -f origin gh-pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs
 
     - name: Notify Slack on deployment failure
       if: failure()
@@ -56,3 +53,4 @@ jobs:
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
         SLACK_MESSAGE: "🚨 BusyBe E2E Tests failed for ${{ github.repository }} on ${{ github.ref }}: ${{ github.run_id }}"
+
