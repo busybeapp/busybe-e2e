@@ -31,6 +31,7 @@ jobs:
         npx marge merged-report.json -o reports/html
         mkdir -p docs
         mv reports/html/* docs/
+        mv docs/merged-report.html docs/index.html
 
     - name: Push Web App
       run: |
