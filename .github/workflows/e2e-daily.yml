@@ -32,23 +32,33 @@ jobs:
         mkdir -p docs
         mv reports/html/* docs/
 
-    - name: Upload Test Report as Artifact
-      if: always() # Upload even if tests pass
-      uses: actions/upload-artifact@v4
-      with:
-        name: E2E-Test-Report
-        path: docs
-        retention-days: 7 # Keep report for 7 days
-    
-    - name: Disable Jekyll processing
-      run: touch docs/.nojekyll
+    - name: Push Web App
+      run: |
+        cd docs
+        # cp -r ../build/web/ docs
+        git config user.name "e2e"
+        git config user.email "e2e@github.com"
+        git add .
+        git commit -m "Publish test report/e2e-busybe"
+        git push origin dashboard
 
-    - name: Deploy Report to GitHub Pages
-      if: always()
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docs
+    # - name: Upload Test Report as Artifact
+    #   if: always() # Upload even if tests pass
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: E2E-Test-Report
+    #     path: docs
+    #     retention-days: 7 # Keep report for 7 days
+    
+    # - name: Disable Jekyll processing
+    #   run: touch docs/.nojekyll
+
+    # - name: Deploy Report to GitHub Pages
+    #   if: always()
+    #   uses: peaceiris/actions-gh-pages@v3
+    #   with:
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+    #     publish_dir: ./docs
 
     - name: Notify Slack on deployment failure
       if: failure()
