@@ -8,16 +8,14 @@ BusyBe E2E is an end-to-end testing suite for the BusyBe application. It leverag
 Ensure you have the following installed before running the tests:
 * Node.js (latest LTS recommended)
 * npm
-* A valid `SLACK_TOKEN` environment variable
+* A valid `SLACK_TOKEN`
 
 ---
 ### Installation
 
-Clone the repository and install dependencies:
+Clone the repo and run the following
 
 ```shell
-git clone https://github.com/busybeapp/busybe-e2e.git
-cd busybe-e2e
 npm install
 ```
 ---
@@ -40,3 +38,9 @@ To open Cypress and run tests manually:
 ```shell
 npm run cy:open
 ```
+#### Github Action Mode
+
+The E2E suite runs daily at midnight UTC.
+
+
+You can also run trigger the action manually [here](https://github.com/busybeapp/busybe-e2e/actions/workflows/e2e-daily.yml)
