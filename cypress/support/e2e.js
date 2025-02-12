@@ -14,6 +14,6 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
-import './slack.driver.js'
-import './app.driver.js'
+import "./commands";
+import "./slack.driver.js";
+import "./app.driver.js";

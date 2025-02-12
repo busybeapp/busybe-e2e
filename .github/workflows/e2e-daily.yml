@@ -2,7 +2,7 @@ name: Daily E2E Tests
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs at midnight UTC daily
+    - cron: "0 0 * * *" # Runs at midnight UTC daily
   workflow_dispatch:
 
 jobs:
@@ -10,27 +10,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18' # Use the appropriate Node.js version
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18" # Use the appropriate Node.js version
 
-    - name: Install Dependencies
-      run: npm install
+      - name: Install Dependencies
+        run: npm install
 
-    - name: Run E2E Tests
-      id: e2e-tests
-      env:
-        SLACK_TOKEN: ${{ secrets.SLACK_VERIFICATION_TOKEN }}
-      run: |
-        SLACK_TOKEN=${{ secrets.SLACK_VERIFICATION_TOKEN }} make test
-      
-    - name: Notify Slack on deployment failure
-      if: failure()
-      uses: rtCamp/action-slack-notify@v2
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-        SLACK_MESSAGE: "🚨 BusyBe E2E Tests failed for ${{ github.repository }} on ${{ github.ref }}: ${{ github.run_id }}"
+      - name: Run E2E Tests
+        id: e2e-tests
+        env:
+          SLACK_TOKEN: ${{ secrets.SLACK_VERIFICATION_TOKEN }}
+        run: |
+          SLACK_TOKEN=${{ secrets.SLACK_VERIFICATION_TOKEN }} make test
+
+      - name: Notify Slack on deployment failure
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_MESSAGE: "🚨 BusyBe E2E Tests failed for ${{ github.repository }} on ${{ github.ref }}: ${{ github.run_id }}"

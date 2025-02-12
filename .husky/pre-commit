@@ -1,0 +1,11 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Run ESLint for linting
+npx --no-install eslint .
+
+# Format code with Prettier
+npx --no-install prettier --write .
+
+# Run lint-staged to process staged files
+npx lint-staged

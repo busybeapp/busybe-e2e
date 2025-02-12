@@ -1,11 +1,13 @@
-
-const slackApiUrl = "https://clear-slate-8b4de92f5776.herokuapp.com/api/slack/message-shortcut"
+const slackApiUrl =
+  "https://clear-slate-8b4de92f5776.herokuapp.com/api/slack/message-shortcut";
 
 function getSlackToken() {
-  const slackToken = Cypress.env('SLACK_TOKEN');
+  const slackToken = Cypress.env("SLACK_TOKEN");
 
   if (!slackToken) {
-    throw new Error("SLACK_TOKEN is not defined. Please set it before running the test.");
+    throw new Error(
+      "SLACK_TOKEN is not defined. Please set it before running the test.",
+    );
   }
 
   return slackToken;
