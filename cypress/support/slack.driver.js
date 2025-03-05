@@ -1,5 +1,4 @@
-const slackApiUrl =
-  "https://clear-slate-8b4de92f5776.herokuapp.com/api/slack/message-shortcut";
+const slackApiUrl = "https://cloud.busybeapp.com/api/slack/message-shortcut";
 
 function getSlackToken() {
   const slackToken = Cypress.env("SLACK_TOKEN");
